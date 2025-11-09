@@ -296,29 +296,7 @@ class EMNISTDataProvider(DataProvider):
 
         """
         
-        K = getattr(self, "num_classes", None)
-        if K is None:
-            raise AttributeError("EMNISTDataProvider must define self.num_classes.")
-        if K <= 1:
-            raise ValueError(f"num_classes must be > 1, got {K}.")
-    
-        # coursework expects alpha = 0.1
-        if not np.isclose(alpha, 0.1):
-            # Keep this gentle: allow passing but warn in logs if you have a logger
-            pass
-    
-        int_targets = np.asarray(int_targets).astype(np.int64).ravel()
-        if (int_targets < 0).any() or (int_targets >= K).any():
-            raise ValueError("Targets must be integers in [0, num_classes-1].")
-    
-        num_data = int_targets.shape[0]
-        off_value = alpha / (K - 1)
-        on_value = 1.0 - alpha
-    
-        # start with all off_value, then set the true class to on_value
-        smoothed = np.full((num_data, K), off_value, dtype=np.float32)
-        smoothed[np.arange(num_data), int_targets] = on_value
-        return smoothed
+        raise NotImplementedError
   
     
 
